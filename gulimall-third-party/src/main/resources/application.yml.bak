@@ -21,8 +21,8 @@ spring:
         dashboard: localhost:8088
         port: 8719
     alicloud:
-      access-key: LTAI5tHqrbuYNdgqy9g75br1
-      secret-key: KjWDtbx57IeLtniQsPGdLhlw5pICPY
+      access-key: xxxx
+      secret-key: xxxx
       oss:
         endpoint: oss-cn-hangzhou.aliyuncs.com
         bucket: gulimall-renchao
@@ -30,7 +30,7 @@ spring:
         host: https://dfsns.market.alicloudapi.com
         path: /data/send_sms
         template-id: TPL_0000
-        appcode: b07d4512e6584369b28e27ae9f47476c
+        appcode: xxxxx
 
 management:
   endpoints:
