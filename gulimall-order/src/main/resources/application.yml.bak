@@ -1,0 +1,69 @@
+server:
+  port: 9000
+  servlet:
+    session:
+      cookie:
+        name: GULISESSION
+        domain: gulimall.com
+spring:
+  application:
+    name: gulimall-order
+  zipkin:
+    base-url: http://192.168.123.205:9411/
+    discoveryClientEnabled: false
+    sender:
+      type: web # 设置使用 http 的方式传输数据
+  sleuth:
+    sampler:
+      #采样率值介于 0 到 1 之间，1 则表示全部采集
+      probability: 1
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.123.205:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8088
+        port: 8719
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    #MySQL配置
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.123.205:3306/gulimall_oms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+
+  redis:
+    host: 192.168.123.205
+  # 分布式 session 配置
+  session:
+    store-type: redis
+
+  # RabbitMQ 配置，其他的配置都有默认值
+  rabbitmq:
+    host: 192.168.123.205
+#    publisher-confirm-type: correlated
+#    publisher-returns: true
+#    template:
+#      mandatory: true
+#    listener:
+#      simple:
+#        acknowledge-mode: manual
+
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      # 主键自增
+      id-type: auto
+
+
+gulimall:
+  thread:
+    core-size: 20
+    max-size: 100
+    keep-alive-time: 10

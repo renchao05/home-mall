@@ -1,0 +1,111 @@
+server:
+  port: 88
+
+spring:
+  application:
+    name: gulimall-gateway
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.123.205:8848 #配置Nacos地址
+      config:
+        server-addr: 192.168.123.205:8848 #Nacos作为配置中心地址
+        file-extension: yml #指定yaml格式的配置
+        namespace: ab4620b0-3754-4846-8ef7-6ca89114db2d
+
+    sentinel:
+      transport:
+        dashboard: localhost:8088 # 控制台地址
+        port: 8719
+
+    gateway:
+      routes:
+        - id: product_routh # 路由的ID，没有固定规则但要求唯一，建议配合服务名
+          uri: lb://gulimall-product          #匹配后提供服务的路由地址  http://localhost:10000/product/category/list/tree
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/product(?<segment>/?.*), /product$\{segment}
+
+        - id: member_routh
+          uri: lb://gulimall-gateway
+          predicates:
+            - Path=/api/member/**
+          filters:
+            - RewritePath=/api/member(?<segment>/?.*), /member$\{segment}
+
+        - id: coupon_routh
+          uri: lb://gulimall-coupon
+          predicates:
+            - Path=/api/coupon/**
+          filters:
+            - RewritePath=/api/coupon(?<segment>/?.*), /coupon$\{segment}
+
+        - id: ware_routh
+          uri: lb://gulimall-ware
+          predicates:
+            - Path=/api/ware/**
+          filters:
+            - RewritePath=/api/ware(?<segment>/?.*), /ware$\{segment}
+
+        - id: third_party_routh
+          uri: lb://gulimall-third-party
+          predicates:
+            - Path=/api/thirdparty/**
+          filters:
+            - RewritePath=/api/thirdparty(?<segment>/?.*), $\{segment}
+
+        - id: admin_routh
+          uri: lb://renren-fast
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api(?<segment>/?.*), /renren-fast$\{segment}
+
+        - id: gulimall_host_routh
+          uri: lb://gulimall-product
+          predicates:
+            - Host=gulimall.com,item.gulimall.com
+
+
+        - id: search_routh
+          uri: lb://gulimall-search
+          predicates:
+            - Host=search.gulimall.com
+
+        - id: auth_routh
+          uri: lb://gulimall-auth-server
+          predicates:
+            - Host=auth.gulimall.com
+
+        - id: cart_routh
+          uri: lb://gulimall-cart
+          predicates:
+            - Host=cart.gulimall.com
+
+        - id: order_routh
+          uri: lb://gulimall-order
+          predicates:
+            - Host=order.gulimall.com
+
+        - id: member_routh
+          uri: lb://gulimall-member
+          predicates:
+            - Host=member.gulimall.com
+
+        - id: seckill_routh
+          uri: lb://gulimall-seckill
+          predicates:
+            - Host=seckill.gulimall.com
+
+        - id: admin_fast_routh
+          uri: lb://renren-fast
+          predicates:
+            - Host=admin.gulimall.com
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

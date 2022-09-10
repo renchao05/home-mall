@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos.mall.renchao05.top:8848
+      config:
+        server-addr: nacos.mall.renchao05.top:8848
+        file-extension: yaml
+        namespace: d8f325dd-27fa-4cd7-8fe6-efe2ebaf711b
+        ext-config:
+          - data-id: common.yaml
+            refresh: true

@@ -1,0 +1,48 @@
+server:
+  port: 35000
+  servlet:
+    session:
+      cookie:
+        name: GULISESSION
+        domain: gulimall.com
+
+spring:
+  application:
+    name: gulimall-search
+  zipkin:
+    base-url: http://192.168.123.205:9411/
+    discoveryClientEnabled: false
+    sender:
+      type: web # 设置使用 http 的方式传输数据
+  sleuth:
+    sampler:
+      #采样率值介于 0 到 1 之间，1 则表示全部采集
+      probability: 1
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.123.205:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8088
+        port: 8719
+
+  thymeleaf:
+    cache: false
+
+  redis:
+    host: 192.168.123.205
+  # 分布式 session 配置
+  session:
+    store-type: redis
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+elasticsearch:
+  host: 192.168.123.205
+  port: 9200

@@ -1,0 +1,39 @@
+server:
+  port: 30000
+spring:
+  application:
+    name: gulimall-third-party
+  zipkin:
+    base-url: http://192.168.123.205:9411/
+    discoveryClientEnabled: false
+    sender:
+      type: web # 设置使用 http 的方式传输数据
+  sleuth:
+    sampler:
+      #采样率值介于 0 到 1 之间，1 则表示全部采集
+      probability: 1
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.123.205:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8088
+        port: 8719
+    alicloud:
+      access-key: LTAI5tHqrbuYNdgqy9g75br1
+      secret-key: KjWDtbx57IeLtniQsPGdLhlw5pICPY
+      oss:
+        endpoint: oss-cn-hangzhou.aliyuncs.com
+        bucket: gulimall-renchao
+      sms:
+        host: https://dfsns.market.alicloudapi.com
+        path: /data/send_sms
+        template-id: TPL_0000
+        appcode: b07d4512e6584369b28e27ae9f47476c
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

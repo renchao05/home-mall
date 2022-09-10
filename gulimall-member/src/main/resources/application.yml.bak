@@ -1,0 +1,57 @@
+server:
+  port: 8003
+  servlet:
+    session:
+      cookie:
+        name: GULISESSION
+        domain: gulimall.com
+      timeout: 30m # 配置 session 过期时间
+
+spring:
+  application:
+    name: gulimall-member
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    #MySQL配置
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.123.205:3306/gulimall_ums?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.123.205:8848 #配置Nacos地址
+    sentinel:
+      transport:
+        dashboard: localhost:8088
+        port: 8719
+
+  redis:
+    host: 192.168.123.205
+  # 分布式 session 配置
+  session:
+    store-type: redis
+
+  zipkin:
+    base-url: http://192.168.123.205:9411/
+    discoveryClientEnabled: false
+    sender:
+     type: web # 设置使用 http 的方式传输数据
+  sleuth:
+    sampler:
+      #采样率值介于 0 到 1 之间，1 则表示全部采集
+      probability: 1
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      # 主键自增
+      id-type: auto
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
