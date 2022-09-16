@@ -26,11 +26,12 @@ public class AlipayTemplate {
     private String alipay_public_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmi+zN4vEh8HP/ucz2YHy4CogpQbH4dri+4py0XETAtyY2bdx0os9ZVxs7KqZGP2Cg4nNwOhDYG3XP7IdMp0W7SMsto7Df/4L5+17bo2gQHBOUjmXXG/h7TUB/cm56Khg+I7FvG1LgR1BDfAx/En5swnywJOhm/mpp8hI2F5JIRfv4OPOsCcCBoCB+H6bA19vvUDbRmmCN2tAhK4raKRtd7oj/R0cbXIQL9fKxj98vvGfDGTF8xjZMejHpExnwCznGK24ay9cb17EhNVqqKxrbUcrfmjsi93bbFpQfyWLDOFtJRNNLw7A1b0R1ynVppxHAw+90+iiVpZJ1TOMQJRIOQIDAQAB";
     // 服务器[异步通知]页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
     // 支付宝会悄悄的给我们发送一个请求，告诉我们支付成功的信息
-    private String notify_url = "http://115.29.43.125:9000/payed/notify";
+//    private String notify_url = "http://115.29.43.125:9000/payed/notify";
+    private String notify_url = "http://order.renchao05.top/payed/notify";
 
     // 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
     //同步通知，支付成功，一般跳转到成功页
-    private String return_url = "http://order.gulimall.com/orderList.html";
+    private String return_url = "http://order.renchao05.top/orderList.html";
 
     // 签名方式
     private String sign_type = "RSA2";

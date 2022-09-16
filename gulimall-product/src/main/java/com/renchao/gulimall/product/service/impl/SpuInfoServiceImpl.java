@@ -1,6 +1,5 @@
 package com.renchao.gulimall.product.service.impl;
 
-import com.alibaba.fastjson.JSONException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.renchao.common.constant.ProductConstant;
 import com.renchao.common.to.*;

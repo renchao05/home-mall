@@ -41,18 +41,24 @@ public class LoginController {
     @ResponseBody
     @GetMapping("/sms/sendcode")
     public R sendCode(@RequestParam("phone") String phone) {
+        // 手机号校验
+        if (!phone.matches("^[1][3578][0-9]{9}$")) {
+            return R.error(333, "手机号码格式错误！");
+        }
+        String codeKey = AuthConstant.SMS_CODE_KEY_PREFIX + phone;
         // 防刷校验
-        String code = redisTemplate.opsForValue().get(AuthConstant.SMS_CODE_KEY_PREFIX + phone);
+        String code = redisTemplate.opsForValue().get(codeKey);
         if (!StringUtils.isEmpty(code)) {
-            long l = (System.currentTimeMillis() - Long.parseLong(code.split("_")[1])) / 1000;
-            if (l < 60) {
-                return R.error(444, String.valueOf(l));
+            // 获取过期时间
+            Long expire = redisTemplate.opsForValue().getOperations().getExpire(codeKey);
+            if (expire != null && expire > 0) {
+                return R.error(444, String.valueOf(expire));
             }
         }
         // 生成验证码，保存验证码，验证码
         code = String.valueOf(Math.random()).substring(2, 8);
         String codeValue = code + "_" + System.currentTimeMillis();
-        redisTemplate.opsForValue().set(AuthConstant.SMS_CODE_KEY_PREFIX + phone, codeValue, 5, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(codeKey, codeValue, 60, TimeUnit.SECONDS);
 //        thirdPartyFeignService.sendSms(phone, code);
         System.out.println("验证码：" + code);
         return R.ok();
@@ -67,7 +73,7 @@ public class LoginController {
             Map<String, String> errors = new HashMap<>();
             errors.put("code", "验证码不正确！");
             attributes.addFlashAttribute("errors", errors);
-            return "redirect:http://auth.gulimall.com/reg.html";
+            return "redirect:http://auth.renchao05.top/reg.html";
         }
 
         // 校验成功后删除验证码
@@ -77,9 +83,9 @@ public class LoginController {
         R r = memberFeignService.register(vo);
         if (!r.get("code").equals(0)) {
             attributes.addFlashAttribute("msg", r.get("msg"));
-            return "redirect:http://auth.gulimall.com/reg.html";
+            return "redirect:http://auth.renchao05.top/reg.html";
         }
-        return "redirect:http://auth.gulimall.com/login.html";
+        return "redirect:http://auth.renchao05.top/login.html";
     }
 
 
@@ -94,12 +100,12 @@ public class LoginController {
         R r = memberFeignService.login(vo);
         if (!r.get("code").equals(0)) {
             attributes.addFlashAttribute("msg", r.get("msg"));
-            return "redirect:http://auth.gulimall.com/login.html";
+            return "redirect:http://auth.renchao05.top/login.html";
         }
         Object o = r.get(AuthConstant.USER);
         UserTo userTo = JSON.parseObject(JSON.toJSONString(o), UserTo.class);
         session.setAttribute(AuthConstant.USER, userTo);
-        return "redirect:http://gulimall.com/";
+        return "redirect:http://renchao05.top/";
     }
 
 
@@ -111,6 +117,6 @@ public class LoginController {
         if (session.getAttribute(AuthConstant.USER) == null) {
             return "login";
         }
-        return "redirect:http://gulimall.com/";
+        return "redirect:http://renchao05.top/";
     }
 }

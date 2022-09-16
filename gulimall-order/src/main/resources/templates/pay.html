@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>收银台</title>
     <link rel="stylesheet" href="static/order/pay/css/style.css">
     <script src="static/order/pay/js/jquery-3.1.1.min.js" charset="utf-8"></script>
 	</head>
@@ -14,8 +14,7 @@
           <li>
             <a th:if="${session.user != null}">欢迎，[[${session.user.nickname}]]</a>
           </li>
-          <li>我的订单</li>
-          <li>支付帮助</li>
+          <li><a href="http://order.renchao05.top/orderList.html">我的订单</a></li>
         </ul>
       </div>
       <div class="Jdbox_BuySuc">
@@ -34,53 +33,15 @@
       </div>
       <div class="Jd_Con">
         <p class="JdCon_title"><img src="static/order/pay/img/title.png" alt=""></p>
-        <div class="Jd_Fenqi">
-          <ul>
-            <li><img src="static/order/pay/img/BAITIAO_2.0.png" alt="">打白条</li>
-            <li>
-              <span>可用额度 7275.38元</span>
-              <span>白条还款日 2018-01-27</span>
-              <span><font>优惠</font>随机立减(最高10元)</span>
-            </li>
-            <li>支付<font>28.90</font>元</li>
-          </ul>
-          <ol>
-            <li>
-              <p>不分期</p>
-              <p>0服务费</p>
-            </li>
-            <li>
-              <p>3期</p>
-              <p>9.48元/期</p>
-            </li>
-            <li>
-              <p>6期</p>
-              <p>4.94元/期</p>
-            </li>
-            <li>
-              <p>12期</p>
-              <p>2.35元/期</p>
-            </li>
-            <li>
-              <p>24期</p>
-              <p>1.44元/期</p>
-            </li>
-          </ol>
-        </div>
         <div class="Jd_main">
           <ul>
             <li>
-              <span>
-                <img src="static/order/pay/img/XJKCONSUME.png" alt="">谷粒学院小金库
-              </span>
-              <span>未开通小金库</span>
             </li>
             <li>
               <span>
                 <img src="static/order/pay/img/CMB.png" alt="">招商银行
               </span>
               <span>信用卡(4337)</span>
-              <span><font>优惠</font>单单减最高99元</span>
             </li>
             <li>
               <button>更多付款方式</button>
@@ -102,77 +63,15 @@
             <img src="static/order/pay/img/weixin.png" alt="">微信支付
           </li>
 		  <li>
-            <a th:href="|http://order.gulimall.com/payOrder?orderSn=${order.orderSn}|">
+            <a th:href="|http://order.renchao05.top/payOrder?orderSn=${order.orderSn}|">
               <img src="static/order/pay/img/zhifubao.png" style="weight:auto;height:30px;" alt="">
               支付宝
             </a>
           </li>
         </ul>
       </div>
-      <div class="Jd_foots">
-        <p>
-          <span>Copyright @2004-2017 谷粒学院gulimall.com 版权所有</span>
-          <span>
-            <img src="static/order/pay/img/foots.png" alt="">
-          </span>
-        </p>
-      </div>
+
     </div>
 	</body>
-  <script type="text/javascript">
-    //头部订单成功 订单详细鼠标移入效果
-    $(".Jdbox_BuySuc dl dd:last-child span:last-child").mouseover(function(){
-      $(this).css({"cursor":"pointer","color":"#E31613"})
-    }).mouseout(function(){
-      $(this).css("color","#7EA4FF")
-    })
-    //分期付款鼠标移入hover效果
-    $(".Jd_Fenqi>ol li:not(:first-child)").mouseover(function(){
-      $(this).css({"cursor":"pointer","border":"1px solid #E31613"})
-    }).mouseout(function(){
-      $(this).css("border","1px solid #C9DFFF")
-    })
-    //支付方式按钮选择hover效果
-    $(".Jd_main ul li:nth-child(3) button").mouseover(function(){
-      $(this).css({"cursor":"pointer","color":"#E31613"})
-    }).mouseout(function(){
-      $(this).css("color","#67A4FF")
-    })
-    //忘记密码鼠标移入效果
-    $(".Jd_main ul li:nth-child(4) span").mouseover(function(){
-      $(this).css({"cursor":"pointer","color":"#E31613"})
-    }).mouseout(function(){
-      $(this).css("color","#67A4FF")
-    })
-    //立即支付按钮效果
-    $(".Jd_main ul li:nth-child(5) button").mouseover(function(){
-      $(this).css({"cursor":"pointer","background":"#FF5350"})
-    }).mouseout(function(){
-      $(this).css("background","#FC6E6C")
-    })
-
-    $(".Jd_footer ul li").mouseover(function(){
-      $(this).css({"cursor":"pointer","color":"#E31613"})
-    }).mouseout(function(){
-      $(this).css("color","#5E5E5E")
-    })
-
-    $(".Jdbox_head>ul li span").mouseover(function(){
-      $(this).css({"cursor":"pointer","color":"#E31613"})
-    }).mouseout(function(){
-      $(this).css("color","#666666")
-    })
-    $(".Jdbox_head>ul li:not(:first-child)").mouseover(function(){
-      $(this).css({"cursor":"pointer","color":"#E31613"})
-    }).mouseout(function(){
-      $(this).css("color","#666666")
-    })
-
-
-    $(".Jd_Fenqi ul li:first-child").mouseover(function(){
-      $(this).css({"cursor":"pointer","color":"#666666"})
-    }).mouseout(function(){
-      $(this).css({"color":"black"})
-    })
-  </script>
+    <script src="static/order/my/pay.js" charset="utf-8"></script>
 </html>

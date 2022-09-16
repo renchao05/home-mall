@@ -19,23 +19,23 @@
     <div class="hd_wrap_top">
         <ul class="hd_wrap_left">
             <li class="hd_home"><i class="glyphicon glyphicon-home"></i>
-                <a href="http://gulimall.com/">谷粒商城首页</a>
+                <a href="http://renchao05.top/">谷粒商城首页</a>
             </li>
 
         </ul>
 
         <ul class="hd_wrap_right">
             <li>
-                <a style="width: 100px" th:if="${session.user == null}" href="http://auth.gulimall.com/login.html">你好，请登录</a>
+                <a style="width: 100px" th:if="${session.user == null}" href="http://auth.renchao05.top/login.html">你好，请登录</a>
                 <a style="width: 100px" th:if="${session.user != null}">欢迎，[[${session.user.nickname}]]</a>
             </li>
             <li>
-                <a th:if="${session.user == null}" href="http://auth.gulimall.com/reg.html" class="li_2">免费注册</a>
+                <a th:if="${session.user == null}" href="http://auth.renchao05.top/reg.html" class="li_2">免费注册</a>
             </li>
             <li class="spacer"></li>
 
             <li>
-                <a href="/javascript:;">我的订单</a>
+                <a href="http://order.renchao05.top/orderList.html">我的订单</a>
             </li>
 
 
@@ -51,11 +51,6 @@
             <div class="nav_top_one">
                 <a href="/#"><img src="static/cart/img/logo1.jpg" style="height: 60px;width:180px;"/></a>
             </div>
-            <div class="nav_top_two"><input type="text"/>
-                <button>搜索</button>
-            </div>
-
-
         </div>
 
     </div>
@@ -77,7 +72,7 @@
                             </div>
                             <div class="p-info">
                                 <div class="p-name">
-                                    <a th:href="'http://item.gulimall.com/'+${item.skuId}+'.html'"
+                                    <a th:href="'http://item.renchao05.top/'+${item.skuId}+'.html'"
                                        th:text="${item.title}"></a>
                                 </div>
                                 <div class="p-extra"><span class="txt" th:text="'数量：'+${item.count}"></span></div>
@@ -92,8 +87,8 @@
                         <div class="clr"></div>
                         <div class="bg_shop">
                             <a class="btn-tobback"
-                               th:href="'http://item.gulimall.com/'+${item.skuId}+'.html'">查看商品详情</a>
-                            <a class="btn-addtocart" href="http://cart.gulimall.com/cart.html"
+                               th:href="'http://item.renchao05.top/'+${item.skuId}+'.html'">查看商品详情</a>
+                            <a class="btn-addtocart" href="http://cart.renchao05.top/cart.html"
                                id="GotoShoppingCart"><b></b>去购物车结算</a>
                         </div>
                     </div>

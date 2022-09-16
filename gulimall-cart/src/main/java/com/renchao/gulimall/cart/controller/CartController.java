@@ -30,7 +30,7 @@ public class CartController {
     public String addCart(@RequestParam Long skuId,
                           @RequestParam Integer count) {
         cartService.addToCart(skuId, count);
-        return "redirect:http://cart.gulimall.com/addCartSuccess.html?skuId=" + skuId + "&count=" + count;
+        return "redirect:http://cart.renchao05.top/addCartSuccess.html?skuId=" + skuId + "&count=" + count;
     }
 
 
@@ -65,7 +65,7 @@ public class CartController {
     @GetMapping("/deleteCart")
     public String deleteCart(String skuId) {
         cartService.deleteCart(skuId);
-        return "redirect:http://cart.gulimall.com/cart.html";
+        return "redirect:http://cart.renchao05.top/cart.html";
     }
 
     /**

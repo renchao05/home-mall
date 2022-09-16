@@ -54,7 +54,7 @@ public class MallSearchServiceImpl implements MallSearchService {
             // 发送请求
             SearchResponse response = client.search(request, RequestOptions.DEFAULT);
 
-            System.out.println("查询价格：" + response.toString());
+//            System.out.println("查询结果：" + response.toString());
             // 构建响应对象
             result = BuilderSearchResult(response,param);
         } catch (IOException e) {
@@ -121,7 +121,9 @@ public class MallSearchServiceImpl implements MallSearchService {
             if (s.length >= 2 && s[1].length() > 0) {
                 rangeQuery.lte(s[1]);
             }
+            boolQuery.filter(rangeQuery);
         }
+
         sourceBuilder.query(boolQuery);
 
         // 排序 //sort=hotScore_asc/desc
@@ -157,9 +159,7 @@ public class MallSearchServiceImpl implements MallSearchService {
         attrAggB.subAggregation(AggregationBuilders.terms("attrValue").field("attrs.attrValue"));
         attrAgg.subAggregation(attrAggB);
         sourceBuilder.aggregation(attrAgg);
-
         System.out.println("请求条件：" + sourceBuilder);
-
         return new SearchRequest(new String[]{EsConstant.PRODUCT_INDEX}, sourceBuilder);
     }
 

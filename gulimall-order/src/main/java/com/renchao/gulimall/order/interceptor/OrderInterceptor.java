@@ -16,7 +16,7 @@ public class OrderInterceptor implements HandlerInterceptor {
         UserTo user = (UserTo) request.getSession().getAttribute(AuthConstant.USER);
         if (user == null) {
             request.getSession().setAttribute("msg","请先登录！");
-            response.sendRedirect("http://auth.gulimall.com/login.html");
+            response.sendRedirect("http://auth.renchao05.top/login.html");
             return false;
         }
         threadLocal.set(user);

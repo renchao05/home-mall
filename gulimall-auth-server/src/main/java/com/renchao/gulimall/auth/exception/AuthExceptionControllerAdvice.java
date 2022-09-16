@@ -26,6 +26,6 @@ public class AuthExceptionControllerAdvice {
         Map<String, String> errors = result.getFieldErrors().stream()
                 .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
         attributes.addFlashAttribute("errors", errors);
-        return "redirect:http://auth.gulimall.com/reg.html";
+        return "redirect:http://auth.renchao05.top/reg.html";
     }
 }

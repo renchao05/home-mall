@@ -105,6 +105,10 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void updateCount(Integer count, String skuId) {
+        if (count <= 0) {
+            deleteCart(skuId);
+            return;
+        }
         BoundHashOperations<String, Object, Object> cartOps = getCart();
         Object o = cartOps.get(skuId);
         CartItem item = JSON.parseObject(Objects.requireNonNull(o).toString(), CartItem.class);

@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.sql.DataSource;
 import java.util.Map;
 
 @Controller
@@ -33,7 +32,7 @@ public class OrderWebController {
                               RedirectAttributes attributes) {
         OrderEntity order = orderService.submitOrder(orderToken);
         attributes.addFlashAttribute("order", order);
-        return "redirect:http://order.gulimall.com/pay.html";
+        return "redirect:http://order.renchao05.top/pay.html";
     }
 
 

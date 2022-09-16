@@ -15,6 +15,6 @@ public class GulimallExceptionControllerAdvice {
     public String handleValidException(SubmitOrderException e,
                                        RedirectAttributes attributes) {
         attributes.addFlashAttribute("error", e.getMessage());
-        return "redirect:http://order.gulimall.com/toTrade";
+        return "redirect:http://order.renchao05.top/toTrade";
     }
 }
