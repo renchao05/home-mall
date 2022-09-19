@@ -1,15 +1,15 @@
 server:
-  port: 7000
+  port: 7003
 
 spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.123.205:8848 #Nacos服务注册中心地址
+        server-addr: gulimall.com:8848 #Nacos服务注册中心地址
       config:
-        server-addr: 192.168.123.205:8848 #Nacos作为配置中心地址
+        server-addr: gulimall.com:8848 #Nacos作为配置中心地址
         file-extension: yaml #指定yaml格式的配置
-        namespace: ab4620b0-3754-4846-8ef7-6ca89114db2d
-        ext-config:
+        namespace: 54813a36-0a12-4f28-b0b7-ae91a6f032d8
+        extension-configs:
           - data-id: common.yaml
             refresh: true

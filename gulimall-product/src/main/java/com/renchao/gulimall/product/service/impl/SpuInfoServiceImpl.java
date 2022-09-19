@@ -11,6 +11,7 @@ import com.renchao.gulimall.product.feign.SearchFeignService;
 import com.renchao.gulimall.product.feign.WareFeignService;
 import com.renchao.gulimall.product.service.*;
 import com.renchao.gulimall.product.vo.spuinfo.*;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -161,6 +162,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
             return skuEsModel;
         }).collect(Collectors.toList());
+        // TODO 事务，可以采用队列 柔性事务-可靠消息+最终一致性方案（异步确保型）
         R r = searchFeignService.saveProduct(skuEsModels);
         if (r.get("code").equals(0)) {
             SpuInfoEntity infoEntity = new SpuInfoEntity();
@@ -185,7 +187,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         return list.stream().collect(Collectors.toMap(SkuInfoEntity::getSkuId, info -> spuMap.get(info.getSpuId())));
     }
 
-    @Transactional
+    @GlobalTransactional
     @Override
     public void saveSpuInfo(SpuInfoVo spuInfo) {
         // 1、保存SPU基本信息：pms_spu_info
@@ -229,7 +231,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         SpuBoundsTo boundsTo = new SpuBoundsTo();
         BeanUtils.copyProperties(bounds, boundsTo);
         boundsTo.setSpuId(spuId);
-        boundsTo.setWork((byte) 15);// TODO 前端未传数据
+        boundsTo.setWork((byte) 15);// TODO 前端未传数据，默认15
         couponFeignService.saveSpuBounds(boundsTo);
     }
 
@@ -306,5 +308,4 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             }
         });
     }
-
 }
