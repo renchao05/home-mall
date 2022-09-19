@@ -1,0 +1,7 @@
+FROM openjdk:8-oraclelinux8
+EXPOSE 9411
+
+VOLUME /tmp
+ADD seata-server-1.4.2.tar.gz  /
+
+ENTRYPOINT ["sh","/seata-server-1.4.2/bin/seata-server.sh"]

@@ -1,0 +1,119 @@
+version: "3.9"
+
+services:
+  seata-server:
+    image: seataio/seata-server:1.4.2
+    environment:
+      SEATA_CONFIG_NAME: 'file:/root/seata-config/registry'
+      SEATA_IP: '192.168.10.188'
+    ports:
+       - "8091:8091"
+    volumes:
+      - /mydata/seata:/root/seata-config
+    networks:
+      - atguigu_net
+    depends_on: 
+      - nacos
+
+  nacos:
+    image: nacos/nacos-server:2.0.4-slim
+    environment:
+      MODE: 'standalone'
+      SPRING_DATASOURCE_PLATFORM: 'mysql'
+      MYSQL_SERVICE_HOST: '192.168.10.188'
+      MYSQL_SERVICE_PORT: '3306'
+      MYSQL_SERVICE_DB_NAME: 'nacos'
+      MYSQL_SERVICE_USER: 'root'
+      MYSQL_SERVICE_PASSWORD: 'root'
+    ports:
+       - "8848:8848"
+    networks:
+      - atguigu_net
+    depends_on: 
+      - mysql
+
+  nginx:
+    image: nginx:1.10
+    ports:
+      - "80:80"
+    volumes:
+      - /mydata/nginx/html:/usr/share/nginx/html
+      - /mydata/nginx/logs:/var/log/nginx
+      - /mydata/nginx/conf:/etc/nginx
+    networks: 
+      - atguigu_net
+ 
+  redis:
+    image: redis:6.0.8
+    ports:
+      - "6379:6379"
+    volumes:
+      - /mydata/redis/redis.conf:/etc/redis/redis.conf
+      - /mydata/redis/data:/data
+    networks: 
+      - atguigu_net
+    command: redis-server /etc/redis/redis.conf
+ 
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: '123456'
+    ports:
+       - "3306:3306"
+    volumes:
+       - /mydata/mysql/data:/var/lib/mysql
+       - /mydata/mysql/log:/var/log/mysql
+       - /mydata/mysql/conf:/etc/mysql/conf.d
+    networks:
+      - atguigu_net
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+       - "5671:5671"
+       - "5672:5672"
+       - "4369:4369"
+       - "25672:25672"
+       - "15671:15671"
+       - "15672:15672"
+    networks:
+      - atguigu_net
+ 
+  zipkin:
+    image: openzipkin/zipkin:2.23.16
+    ports:
+       - "9411:9411"
+    networks:
+      - atguigu_net
+
+  sentinel:
+    build: 
+      context: .
+      dockerfile: Dockerfile-sentinel
+    container_name: sentinel
+    ports:
+      - "8088:8080"
+    environment:
+      - Dsentinel.dashboard.auth.username=sentinel
+      - Dsentinel.dashboard.auth.password=yue@199005
+    networks: 
+      - atguigu_net
+
+  elasticsearch:
+    image: elasticsearch:7.4.2
+    environment:
+      discovery.type: 'single-node'
+      ES_JAVA_OPTS: '-Xms64m -Xmx256m'
+    volumes:
+       - /mydata/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+       - /mydata/elasticsearch/data:/usr/share/elasticsearch/data
+       - /mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins
+    ports:
+       - "9200:9200"
+       - "9300:9300"
+    networks:
+      - atguigu_net
+
+networks: 
+   atguigu_net: 
+ 

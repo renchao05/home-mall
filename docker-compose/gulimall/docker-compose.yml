@@ -1,0 +1,138 @@
+version: "3.9"
+
+services:
+  auth-server:
+    build: 
+      context: .
+      dockerfile: Dockerfile-auth-server
+    container_name: auth-server
+    ports:
+      - "20000:8080"
+    environment:
+      - spring.profiles.active=prod
+    networks: 
+      - atguigu_net
+      
+  cart:
+    build: 
+      context: .
+      dockerfile: Dockerfile-cart
+    container_name: cart
+    ports:
+      - "36000:8080"
+    environment:
+      - spring.profiles.active=prod
+    networks: 
+      - atguigu_net
+
+  coupon:
+    build: 
+      context: .
+      dockerfile: Dockerfile-coupon
+    container_name: coupon
+    ports:
+      - "7000:8080"
+    environment:
+      - spring.profiles.active=prod
+    networks: 
+      - atguigu_net
+
+  gateway:
+    build: 
+      context: .
+      dockerfile: Dockerfile-gateway
+    container_name: gateway
+    ports:
+      - "88:8080"
+    environment:
+      - spring.profiles.active=prod
+    networks: 
+      - atguigu_net
+
+  member:
+    build: 
+      context: .
+      dockerfile: Dockerfile-member
+    container_name: member
+    ports:
+      - "8003:8080"
+    environment:
+      - spring.profiles.active=prod
+    networks: 
+      - atguigu_net
+
+  order:
+    build: 
+      context: .
+      dockerfile: Dockerfile-order
+    container_name: order
+    ports:
+      - "9000:8080"
+    environment:
+      - spring.profiles.active=prod
+    networks: 
+      - atguigu_net
+
+  product:
+    build: 
+      context: .
+      dockerfile: Dockerfile-product
+    container_name: product
+    ports:
+      - "10000:8080"
+    environment:
+      - spring.profiles.active=prod
+    networks: 
+      - atguigu_net
+
+  renren-fast:
+    build: 
+      context: .
+      dockerfile: Dockerfile-renren-fast
+    container_name: renren-fast
+    ports:
+      - "8080:8080"
+    environment:
+      - spring.profiles.active=prod
+    networks: 
+      - atguigu_net
+
+  search:
+    build: 
+      context: .
+      dockerfile: Dockerfile-search
+    container_name: search
+    ports:
+      - "35000:8080"
+    environment:
+      - spring.profiles.active=prod
+    networks: 
+      - atguigu_net
+
+  third-party:
+    build: 
+      context: .
+      dockerfile: Dockerfile-third-party
+    container_name: third-party
+    ports:
+      - "30000:8080"
+    environment:
+      - spring.profiles.active=prod
+    networks: 
+      - atguigu_net
+
+  ware:
+    build: 
+      context: .
+      dockerfile: Dockerfile-ware
+    container_name: ware
+    ports:
+      - "11000:8080"
+    environment:
+      - spring.profiles.active=prod
+    networks: 
+      - atguigu_net
+
+networks: 
+   atguigu_net: 
+ 
