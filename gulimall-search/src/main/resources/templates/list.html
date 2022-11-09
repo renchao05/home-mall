@@ -28,7 +28,8 @@
         <ul>
             <li>
                 <a th:if="${session.user == null}" href="http://auth.renchao05.top/login.html">你好，请登录</a>
-                <a th:if="${session.user != null}">欢迎，[[${session.user.nickname}]]</a>
+                <a th:if="${session.user != null}">欢迎，[[${session.user.username}]]</a>
+                <a th:if="${session.user != null}" href="http://auth.renchao05.top/logout"> | 注销</a>
             </li>
             <li>
                 <a th:if="${session.user == null}" href="http://auth.renchao05.top/reg.html" class="li_2">免费注册</a>

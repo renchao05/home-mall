@@ -59,8 +59,8 @@ public class LoginController {
         code = String.valueOf(Math.random()).substring(2, 8);
         String codeValue = code + "_" + System.currentTimeMillis();
         redisTemplate.opsForValue().set(codeKey, codeValue, 60, TimeUnit.SECONDS);
-//        thirdPartyFeignService.sendSms(phone, code);
-        System.out.println("验证码：" + code);
+        thirdPartyFeignService.sendSms(phone, code);
+//        System.out.println("验证码：" + code);
         return R.ok();
     }
 
@@ -117,6 +117,15 @@ public class LoginController {
         if (session.getAttribute(AuthConstant.USER) == null) {
             return "login";
         }
+        return "redirect:http://renchao05.top/";
+    }
+
+    /**
+     * 退出登录
+     */
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
         return "redirect:http://renchao05.top/";
     }
 }

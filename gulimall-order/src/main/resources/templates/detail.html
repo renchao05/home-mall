@@ -132,7 +132,8 @@
             </ul>
             <ul class="header_ul_right">
                 <li>
-                    <a th:if="${session.user != null}">欢迎，[[${session.user.nickname}]]</a>
+                    <a th:if="${session.user != null}">欢迎，[[${session.user.username}]]</a>
+                    <a th:if="${session.user != null}" href="http://auth.renchao05.top/logout"> | 注销</a>
                 </li>
                 <span>|</span>
                 <li>

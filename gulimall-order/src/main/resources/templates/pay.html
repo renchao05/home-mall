@@ -12,7 +12,7 @@
         <img src="static/order/pay/img/logo1.jpg" alt=""><span class="bank">收银台</span>
         <ul>
           <li>
-            <a th:if="${session.user != null}">欢迎，[[${session.user.nickname}]]</a>
+            <a th:if="${session.user != null}">欢迎，[[${session.user.username}]]</a>
           </li>
           <li><a href="http://order.renchao05.top/orderList.html">我的订单</a></li>
         </ul>
