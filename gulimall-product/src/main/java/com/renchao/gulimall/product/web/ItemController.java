@@ -24,13 +24,4 @@ public class ItemController {
         model.addAttribute("skuItem", skuItem);
         return "item";
     }
-
-    @GetMapping("/test000/{skuId}")
-    @ResponseBody
-    public SkuItemVo test000(@PathVariable String skuId,Model model) throws ExecutionException, InterruptedException {
-        System.out.println("============cesss" + skuId);
-        SkuItemVo skuItem = skuInfoService.item(8L);
-        model.addAttribute("skuItem", skuItem);
-        return skuItem;
-    }
 }

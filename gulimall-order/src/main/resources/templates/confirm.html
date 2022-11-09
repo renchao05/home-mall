@@ -61,8 +61,17 @@
             <div class="yun1" th:each="item : ${confirm.items}">
                 <img style="width: 90px;height: 90px" th:src="${item.image}" class="yun"/>
                 <div class="mi">
-                    <p>[[${item.title}]] <span style="color: red;"> ￥ [[${item.price}]]</span>
-                        <span> x[[${item.count}]] </span> <span>[[${item.hasStock?'有货':'无货'}]]</span></p>
+                    <p>[[${item.title}]]
+                        <span style="color: red;">
+                            ￥ [[${#numbers.formatDecimal(item.price,1,2)}]]
+                        </span>
+                        <span>
+                            x[[${item.count}]]
+                        </span>
+                        <span>
+                            [[${item.hasStock?'有货':'无货'}]]
+                        </span>
+                    </p>
                     <p><span th:each="attr:${item.skuAttr}">[[${attr}]]</span> <span>0.095kg</span></p>
                     <p class="tui-1"><img src="static/order/confirm/img/i_07.png"/>支持7天无理由退货</p>
                 </div>
@@ -74,7 +83,9 @@
             <p class="qian_y">
                 <span>[[${confirm.count}]]</span>
                 <span>件商品，总商品金额：</span>
-                <span class="rmb">￥[[${confirm.total}]]</span>
+                <span class="rmb">
+                    ￥[[${#numbers.formatDecimal(confirm.total,1,2)}]]
+                </span>
             </p>
             <p class="qian_y">
                 <span>运费： </span>
@@ -83,7 +94,11 @@
         </div>
 
         <div class="yfze">
-            <p class="yfze_a"><span class="z">应付总额：</span><span id="payPrice" class="hq">￥[[${confirm.payPrice}]]</span>
+            <p class="yfze_a">
+                <span class="z">应付总额：</span>
+                <span id="payPrice" class="hq">
+                    ￥[[${#numbers.formatDecimal(confirm.payPrice,1,2)}]]
+                </span>
             </p>
             <p class="yfze_b">
                 寄送至： [[${confirm.sa.city}]] [[${confirm.sa.region}]] [[${confirm.sa.detailAddress}]]

@@ -124,7 +124,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     @Cacheable(value = {"category"}, key = "#root.methodName", sync = true)
     @Override
     public List<CategoryEntity> getLevel1CategoryList() {
-        System.out.println("方法被调用。。。");
+//        System.out.println("方法被调用。。。");
         LambdaQueryWrapper<CategoryEntity> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(CategoryEntity::getParentCid, 0);
         return this.list(wrapper);
@@ -135,7 +135,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
      */
     @Cacheable(value = "category", key = "#root.methodName", sync = true)
     public Map<Long, List<Catalog2Vo>> getCatalogJson() {
-        System.out.println("方法被调用。。。。。。");
+//        System.out.println("方法被调用。。。。。。");
         return getCatalogJsonNoCache();
     }
 

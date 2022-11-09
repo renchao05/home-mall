@@ -33,8 +33,9 @@
     <nav>
         <div class="nav_min">
             <div class="nav_top">
-                <div class="nav_top_one"><a href="#"><img src="static/item/img/111.png"/></a></div>
-                <div class="nav_top_two"><input type="text"/>
+                <div class="nav_top_one"><a href="http://renchao05.top"><img src="static/item/img/111.png"/></a></div>
+                <div class="nav_top_two">
+                    <input type="text"/>
                     <button>搜索</button>
                 </div>
                 <div class="nav_top_three"><a href="http://cart.renchao05.top/cart.html">我的购物车</a>
@@ -57,11 +58,11 @@
 
                 <div class="imgbox">
                     <div class="probox">
-                        <img class="img1" alt="" src="static/item/img/59ded626N7c4cb0a3.jpg">
+                        <img class="img1" alt="" th:src="${skuItem.info.skuDefaultImg}">
                         <div class="hoverbox"></div>
                     </div>
                     <div class="showbox">
-                        <img class="img1" alt="" src="static/item/img/59ded626N7c4cb0a3.jpg">
+                        <img class="img1" alt="" th:src="${skuItem.info.skuDefaultImg}">
                     </div>
                 </div>
 
@@ -93,7 +94,7 @@
                         <li>商城价</li>
                         <li>
                             <span>￥</span>
-                            <span>4499.00</span>
+                            <span th:text="${#numbers.formatDecimal(skuItem.info.price,1,2)}">4499.00</span>
                         </li>
                     </ul>
                     <br>
