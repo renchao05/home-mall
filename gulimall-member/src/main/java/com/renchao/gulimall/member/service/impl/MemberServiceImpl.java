@@ -5,7 +5,9 @@ import com.renchao.common.exception.GulimallLoginException;
 import com.renchao.common.exception.GulimallRegisterException;
 import com.renchao.common.to.UserTo;
 import com.renchao.common.utils.R;
+import com.renchao.gulimall.member.entity.MemberReceiveAddressEntity;
 import com.renchao.gulimall.member.service.MemberLevelService;
+import com.renchao.gulimall.member.service.MemberReceiveAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ import com.renchao.common.utils.Query;
 import com.renchao.gulimall.member.dao.MemberDao;
 import com.renchao.gulimall.member.entity.MemberEntity;
 import com.renchao.gulimall.member.service.MemberService;
-
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service("memberService")
@@ -27,6 +29,9 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
 
     @Autowired
     private MemberLevelService memberLevelService;
+
+    @Autowired
+    private MemberReceiveAddressService memberReceiveAddressService;
 
     @Override
     public void checkPhoneUnique(String phone) {
@@ -63,6 +68,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
      * 用户注册
      * @param member
      */
+    @Transactional
     @Override
     public void register(MemberEntity member) {
         // 检查手机和用户名是否唯一，如果不是唯一，直接抛异常，由异常处理
@@ -72,12 +78,26 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
 
         // 设置会员默认等级
         member.setLevelId(levelId);
+        // 设置默认昵称
+        member.setNickname("商城宝贝");
 
         // 密码加密
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         member.setPassword(encoder.encode(member.getPassword()));
 
         this.save(member);
+
+        // TODO 设置默认收货地址，这里直接写死，有需要再修改
+        MemberReceiveAddressEntity address = new MemberReceiveAddressEntity();
+        address.setMemberId(member.getId());
+        address.setName(member.getNickname());
+        address.setPhone(member.getMobile());
+        address.setProvince("江苏省");
+        address.setCity("南通市");
+        address.setRegion("海门区");
+        address.setDetailAddress("三星镇");
+        address.setDefaultStatus(1);
+        memberReceiveAddressService.save(address);
     }
 
 
