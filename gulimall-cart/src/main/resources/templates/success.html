@@ -26,8 +26,8 @@
 
         <ul class="hd_wrap_right">
             <li>
-                <a style="width: 100px" th:if="${session.user == null}" href="http://auth.renchao05.top/login.html">你好，请登录</a>
-                <a style="width: 100px" th:if="${session.user != null}">欢迎，[[${session.user.username}]]</a>
+                <a th:if="${session.user == null}" href="http://auth.renchao05.top/login.html">你好，请登录</a>
+                <a th:if="${session.user != null}">[[${session.user.username}]]</a>
             </li>
             <li>
                 <a th:if="${session.user == null}" href="http://auth.renchao05.top/reg.html" class="li_2">免费注册</a>
