@@ -1,10 +1,11 @@
 package com.renchao.gulimall.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.renchao.common.constant.SearchConstant;
 import com.renchao.common.to.es.SkuEsModel;
+import com.renchao.gulimall.constant.EsConstant;
 import com.renchao.gulimall.service.ProductSaveService;
 import org.elasticsearch.action.bulk.BulkRequest;
+import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -25,12 +26,13 @@ public class ProductSaveServiceImpl implements ProductSaveService {
     public void saveProduct(List<SkuEsModel> models) throws IOException {
         BulkRequest bulkRequest = new BulkRequest();
         models.forEach(model -> {
-            IndexRequest request = new IndexRequest(SearchConstant.PRODUCT_INDEX_NAME).id(model.getSkuId().toString());
+            IndexRequest request = new IndexRequest(EsConstant.PRODUCT_INDEX).id(model.getSkuId().toString());
             String skuStr = JSON.toJSONString(model);
             request.source(skuStr, XContentType.JSON);
             bulkRequest.add(request);
         });
 
-        client.bulk(bulkRequest, RequestOptions.DEFAULT);
+        BulkResponse bulk = client.bulk(bulkRequest, RequestOptions.DEFAULT);
+        System.out.println(bulk);
     }
 }

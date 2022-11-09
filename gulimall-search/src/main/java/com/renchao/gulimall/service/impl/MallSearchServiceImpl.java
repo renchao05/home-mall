@@ -16,10 +16,7 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.NestedQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
-import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.nested.Nested;
 import org.elasticsearch.search.aggregations.bucket.nested.NestedAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
@@ -28,7 +25,6 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.elasticsearch.search.sort.SortOrder;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -159,7 +155,7 @@ public class MallSearchServiceImpl implements MallSearchService {
         attrAggB.subAggregation(AggregationBuilders.terms("attrValue").field("attrs.attrValue"));
         attrAgg.subAggregation(attrAggB);
         sourceBuilder.aggregation(attrAgg);
-        System.out.println("请求条件：" + sourceBuilder);
+//        System.out.println("请求条件：" + sourceBuilder);
         return new SearchRequest(new String[]{EsConstant.PRODUCT_INDEX}, sourceBuilder);
     }
 
