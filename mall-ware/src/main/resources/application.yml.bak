@@ -27,7 +27,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     #MySQL配置
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.123.205:3306/gulimall_wms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://192.168.123.205:3306/mall_wms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: root
   jackson:
@@ -47,7 +47,7 @@ mybatis-plus:
 
 logging:
   level:
-    com.renchao.gulimall.ware.dao: debug
+    com.renchao.mall.ware.dao: debug
 
 management:
   endpoints:

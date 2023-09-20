@@ -4,7 +4,7 @@ server:
     session:
       cookie:
         name: GULISESSION
-        domain: gulimall.com
+        domain: mall.com
       timeout: 30m # 配置 session 过期时间
 
 spring:

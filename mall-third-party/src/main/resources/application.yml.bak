@@ -25,7 +25,7 @@ spring:
       secret-key: xxxx
       oss:
         endpoint: oss-cn-hangzhou.aliyuncs.com
-        bucket: gulimall-renchao
+        bucket: mall-renchao
       sms:
         host: https://dfsns.market.alicloudapi.com
         path: /data/send_sms

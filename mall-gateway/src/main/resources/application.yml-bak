@@ -63,46 +63,46 @@ spring:
           filters:
             - RewritePath=/api(?<segment>/?.*), /renren-fast$\{segment}
 
-        - id: gulimall_host_routh
+        - id: mall_host_routh
           uri: lb://mall-product
           predicates:
-            - Host=gulimall.com,item.gulimall.com
+            - Host=mall.com,item.mall.com
 
 
         - id: search_routh
           uri: lb://mall-search
           predicates:
-            - Host=search.gulimall.com
+            - Host=search.mall.com
 
         - id: auth_routh
           uri: lb://mall-auth-server
           predicates:
-            - Host=auth.gulimall.com
+            - Host=auth.mall.com
 
         - id: cart_routh
           uri: lb://mall-cart
           predicates:
-            - Host=cart.gulimall.com
+            - Host=cart.mall.com
 
         - id: order_routh
           uri: lb://mall-order
           predicates:
-            - Host=order.gulimall.com
+            - Host=order.mall.com
 
         - id: member_routh
           uri: lb://mall-member
           predicates:
-            - Host=member.gulimall.com
+            - Host=member.mall.com
 
         - id: seckill_routh
           uri: lb://mall-seckill
           predicates:
-            - Host=seckill.gulimall.com
+            - Host=seckill.mall.com
 
         - id: admin_fast_routh
           uri: lb://renren-fast
           predicates:
-            - Host=admin.gulimall.com
+            - Host=admin.mall.com
 
 management:
   endpoints:

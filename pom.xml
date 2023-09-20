@@ -9,8 +9,8 @@
         <version>2.2.2.RELEASE</version>
     </parent>
 
-    <groupId>com.renchao.gulimall</groupId>
-    <artifactId>gulimall</artifactId>
+    <groupId>com.renchao.mall</groupId>
+    <artifactId>home-mall</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>mall-common</module>

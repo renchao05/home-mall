@@ -4,7 +4,7 @@ server:
     session:
       cookie:
         name: GULISESSION
-        domain: gulimall.com
+        domain: mall.com
 spring:
   application:
     name: mall-order
@@ -30,7 +30,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     #MySQL配置
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.123.205:3306/gulimall_oms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://192.168.123.205:3306/mall_oms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: root
 
@@ -62,7 +62,7 @@ mybatis-plus:
       id-type: auto
 
 
-gulimall:
+mall:
   thread:
     core-size: 20
     max-size: 100
