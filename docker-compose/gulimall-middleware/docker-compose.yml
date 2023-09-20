@@ -11,7 +11,7 @@ services:
     volumes:
       - /mydata/seata:/root/seata-config
     networks:
-      - atguigu_net
+      - home_mall_net
     depends_on: 
       - nacos
 
@@ -20,7 +20,7 @@ services:
     environment:
       MODE: 'standalone'
       SPRING_DATASOURCE_PLATFORM: 'mysql'
-      MYSQL_SERVICE_HOST: '192.168.10.188'
+      MYSQL_SERVICE_HOST: 'mysql'
       MYSQL_SERVICE_PORT: '3306'
       MYSQL_SERVICE_DB_NAME: 'nacos'
       MYSQL_SERVICE_USER: 'root'
@@ -28,7 +28,7 @@ services:
     ports:
        - "8848:8848"
     networks:
-      - atguigu_net
+      - home_mall_net
     depends_on: 
       - mysql
 
@@ -41,7 +41,7 @@ services:
       - /mydata/nginx/logs:/var/log/nginx
       - /mydata/nginx/conf:/etc/nginx
     networks: 
-      - atguigu_net
+      - home_mall_net
  
   redis:
     image: redis:6.0.8
@@ -51,7 +51,7 @@ services:
       - /mydata/redis/redis.conf:/etc/redis/redis.conf
       - /mydata/redis/data:/data
     networks: 
-      - atguigu_net
+      - home_mall_net
     command: redis-server /etc/redis/redis.conf
  
   mysql:
@@ -65,7 +65,7 @@ services:
        - /mydata/mysql/log:/var/log/mysql
        - /mydata/mysql/conf:/etc/mysql/conf.d
     networks:
-      - atguigu_net
+      - home_mall_net
 
   rabbitmq:
     image: rabbitmq:management
@@ -77,14 +77,14 @@ services:
        - "15671:15671"
        - "15672:15672"
     networks:
-      - atguigu_net
+      - home_mall_net
  
   zipkin:
     image: openzipkin/zipkin:2.23.16
     ports:
        - "9411:9411"
     networks:
-      - atguigu_net
+      - home_mall_net
 
   sentinel:
     build: 
@@ -97,7 +97,7 @@ services:
       - Dsentinel.dashboard.auth.username=sentinel
       - Dsentinel.dashboard.auth.password=yue@199005
     networks: 
-      - atguigu_net
+      - home_mall_net
 
   elasticsearch:
     image: elasticsearch:7.4.2
@@ -112,8 +112,8 @@ services:
        - "9200:9200"
        - "9300:9300"
     networks:
-      - atguigu_net
+      - home_mall_net
 
 networks: 
-   atguigu_net: 
+   home_mall_net:
  
