@@ -3,7 +3,7 @@ spring:
         type: com.alibaba.druid.pool.DruidDataSource
         druid:
             driver-class-name: com.mysql.cj.jdbc.Driver
-            url: jdbc:mysql://sql.mall.renchao05.top:3306/gulimall_admin?useUnicode=true&characterEncoding=UTF-8
+            url: jdbc:mysql://mysql:3306/mall_admin?useUnicode=true&characterEncoding=UTF-8
             username: root
             password: chao@199005
             initial-size: 10
@@ -36,17 +36,17 @@ spring:
     cloud:
         nacos:
             discovery:
-                server-addr: nacos.mall.renchao05.top:8848 #配置Nacos地址
+                server-addr: nacos:8848 #配置Nacos地址
         #  resources:
         #    add-mappings: false
         sentinel:
             transport:
-                dashboard: sentinel.mall.renchao05.top:8088 # 控制台地址
+                dashboard: sentinel:8088 # 控制台地址
                 port: 8719
 
     redis:
         database: 0
-        host: redis.mall.renchao05.top
+        host: redis
         port: 6379
         password: yue@199005    # 密码（默认为空）
         timeout: 6000ms  # 连接超时时长（毫秒）
