@@ -1,6 +1,7 @@
 package com.renchao.mall.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.renchao.common.exception.RRException;
 import com.renchao.common.to.es.SkuEsModel;
 import com.renchao.mall.constant.EsConstant;
 import com.renchao.mall.service.MallSearchService;
@@ -25,6 +26,8 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.elasticsearch.search.sort.SortOrder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -35,6 +38,7 @@ import java.util.List;
 
 @Service
 public class MallSearchServiceImpl implements MallSearchService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MallSearchServiceImpl.class);
 
     @Autowired
     private RestHighLevelClient client;
@@ -44,18 +48,17 @@ public class MallSearchServiceImpl implements MallSearchService {
         // 构建请求体
         SearchRequest request = BuilderSearchRequest(param);
 
-        SearchResult result = null;
         try {
             // 发送请求
             SearchResponse response = client.search(request, RequestOptions.DEFAULT);
 
-//            System.out.println("查询结果：" + response.toString());
+            LOGGER.info("查询结果：{}", response.toString());
             // 构建响应对象
-            result = BuilderSearchResult(response,param);
+            return BuilderSearchResult(response,param);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("查询出错{}", e.getMessage(), e);
+            throw new RRException("查询出错:" + e.getMessage());
         }
-        return result;
     }
 
     /**
@@ -113,7 +116,7 @@ public class MallSearchServiceImpl implements MallSearchService {
             if (!StringUtils.isEmpty(s[0])) {
                 rangeQuery.gte(s[0]);
             }
-            if (s.length >= 2 && s[1].length() > 0) {
+            if (s.length >= 2 && !s[1].isEmpty()) {
                 rangeQuery.lte(s[1]);
             }
             boolQuery.filter(rangeQuery);
@@ -155,6 +158,7 @@ public class MallSearchServiceImpl implements MallSearchService {
         attrAgg.subAggregation(attrAggB);
         sourceBuilder.aggregation(attrAgg);
 //        System.out.println("请求条件：" + sourceBuilder);
+        LOGGER.info("请求条件：{}", sourceBuilder);
         return new SearchRequest(new String[]{EsConstant.PRODUCT_INDEX}, sourceBuilder);
     }
 
