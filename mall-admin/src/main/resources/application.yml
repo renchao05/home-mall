@@ -8,9 +8,6 @@ server:
   servlet:
     context-path: /renren-fast
 spring:
-  # 环境 dev|test|prod
-  profiles:
-    active: dev
   # jackson时间格式化
   jackson:
     time-zone: GMT+8
@@ -26,13 +23,7 @@ spring:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
   application:
-    name: renren-fast
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
+    name: mall-admin
 
 #mybatis
 mybatis-plus:
