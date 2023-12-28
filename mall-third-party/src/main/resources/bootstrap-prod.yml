@@ -6,10 +6,11 @@ spring:
     nacos:
       discovery:
         server-addr: nacos:8848
+        namespace: d8f325dd-27fa-4cd7-8fe6-efe2ebaf711b
       config:
         server-addr: nacos:8848
         file-extension: yaml
         namespace: d8f325dd-27fa-4cd7-8fe6-efe2ebaf711b
-        ext-config:
+        extension-configs:
           - data-id: common.yaml
             refresh: true
