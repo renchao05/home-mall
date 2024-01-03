@@ -1,0 +1,27 @@
+version: 0.0.1
+env: prod
+
+mall:
+  - name: mall-gateway
+    port: 8080
+    serviceType: NodePort
+  - name: mall-product
+    port: 8080
+  - name: mall-order
+    port: 8080
+  - name: mall-member
+    port: 8080
+  - name: mall-search
+    port: 8080
+  - name: mall-third-party
+    port: 8080
+  - name: mall-ware
+    port: 8080
+  - name: mall-admin
+    port: 8080
+  - name: mall-auth-server
+    port: 8080
+  - name: mall-cart
+    port: 8080
+  - name: mall-coupon
+    port: 8080

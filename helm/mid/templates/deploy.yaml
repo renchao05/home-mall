@@ -1,0 +1,5 @@
+{{- range .Values.deploy }}
+{{- template "mid.deploy" . }}
+
+---
+{{- end }}

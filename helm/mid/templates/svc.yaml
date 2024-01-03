@@ -1,0 +1,5 @@
+{{- range .Values.svc }}
+{{- template "mid.svc" . }}
+
+---
+{{- end }}

@@ -1,0 +1,6 @@
+{{- range .Values.configmap }}
+{{- template "mid.cm" . }}
+{{ ($.Files.Glob .file).AsConfig | indent 2 }}
+
+---
+{{- end }}

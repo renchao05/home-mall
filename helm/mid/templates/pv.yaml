@@ -1,0 +1,5 @@
+{{- range .Values.pv }}
+{{- template "mid.pv" . }}
+
+---
+{{- end }}

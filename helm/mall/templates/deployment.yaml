@@ -1,0 +1,45 @@
+{{- range .Values.mall }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .name }}
+    spec:
+      initContainers:
+      - name: wait-for-nacos
+        image: busybox
+        command: ["sh", "-c", "until wget --spider -S http://nacos:8848/nacos/ 2>&1 | grep 'HTTP/.* 200'; do echo 'Waiting for Nacos to start...'; sleep 5; done;"]
+      containers:
+      - name: {{ .name }}
+        image: 10.0.0.86:5000/{{ .name }}:{{ $.Values.version }}
+        ports:
+        - containerPort: {{ .port }}
+        env:
+        - name: 'spring.profiles.active'
+          value: {{ $.Values.env | quote }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .name }}
+spec:
+  selector:
+    app: {{ .name }}
+  ports:
+    - protocol: TCP
+      port: {{ .port }}
+  {{- if .serviceType }}
+  type: {{ .serviceType }}
+  {{- end }}
+
+---
+{{- end }}

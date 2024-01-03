@@ -1,0 +1,203 @@
+configmap:
+  - name: mysql
+    file: conf/mysql/*
+  - name: seata
+    file: conf/seata/*
+  - name: redis
+    file: conf/redis/*
+
+pv:
+  - name: elasticsearch-data
+    path: /data/elasticsearch/data
+    size: 5Gi
+  - name: elasticsearch-plugins
+    path: /data/elasticsearch/plugins
+    size: 1Gi
+  - name: mysql-data
+    path: /data/mysql/data
+    size: 10Gi
+  - name: mysql-log
+    path: /data/mysql/log
+    size: 10Gi
+  - name: redis-data
+    path: /data/redis/data
+    size: 10Gi
+
+svc:
+  - name: elasticsearch
+    selector: elasticsearch
+    clusterIP: None
+    ports:
+      - 9200
+      - 9300
+  - name: mysql
+    selector: mysql
+    clusterIP: None
+    ports:
+      - 3306
+  - name: nacos
+    selector: nacos
+    ports:
+      - 8848
+  - name: rabbitmq
+    selector: rabbitmq
+    ports:
+      - 5672
+      - 15672
+  - name: redis
+    selector: redis
+    clusterIP: None
+    ports:
+      - 6379
+  - name: sentinel
+    selector: sentinel
+    ports:
+      - 8080
+  - name: zipkin
+    selector: zipkin
+    ports:
+      - 9411
+  - name: seata
+    selector: seata
+    ports:
+      - 8091
+
+deploy:
+  - name: nacos
+    image: nacos/nacos-server:2.0.4-slim
+    env:
+      - name: MODE
+        value: standalone
+      - name: SPRING_DATASOURCE_PLATFORM
+        value: Mysql
+      - name: MYSQL_SERVICE_HOST
+        value: mysql
+      - name: MYSQL_SERVICE_PORT
+        value: 3306
+      - name: MYSQL_SERVICE_DB_NAME
+        value: nacos
+      - name: MYSQL_SERVICE_USER
+        value: root
+      - name: MYSQL_SERVICE_PASSWORD
+        value: mall@666666
+    ports:
+      - 8848
+    initContainers:
+      - name: init-mysql
+        image: mysql:8.1
+        command: "until mysql -h mysql -uroot -pmall@666666 -e 'SELECT 1'; do echo waiting for mysql; sleep 2; done;"
+  - name: seata
+    image: renchao05/seata-arm64:1.4.2
+    env:
+      - name: SEATA_CONFIG_NAME
+        value: 'file:/root/seata-config/registry'
+      - name: SEATA_PORT
+        value: '8091'
+    ports:
+      - 8091
+    volumeMounts:
+      - name: config-volume
+        mountPath: /root/seata-config
+    volumes:
+      - name: config-volume
+        type: configMap
+        typeNameKey: name
+        typeNameValue: seata-cm
+    initContainers:
+      - name: init-nacos
+        image: busybox
+        command: "until wget --spider -S http://nacos:8848/nacos/ 2>&1 | grep 'HTTP/.* 200'; do echo 'Waiting for Nacos to start...'; sleep 5; done;"
+
+  - name: rabbitmq
+    image: rabbitmq:3.11-management
+    env:
+      - name: RABBITMQ_DEFAULT_USER
+        value: mall
+      - name: RABBITMQ_DEFAULT_PASS
+        value: mall@666666
+    ports:
+      - 5672
+      - 15672
+  - name: sentinel
+    image: 10.0.0.86:5000/sentinel:1.6.3-1
+    env:
+      - name: "PASSWORD"
+        value: "mall@666666"
+    ports:
+      - 8080
+  - name: zipkin
+    image: openzipkin/zipkin:2.23.16
+    ports:
+      - 9411
+
+
+sts:
+  - name: elasticsearch
+    image: elasticsearch:7.17.7
+    env:
+      - name: discovery.type
+        value: single-node
+      - name: ES_JAVA_OPTS
+        value: "-Xms64m -Xmx256m"
+    ports:
+      - 9200
+      - 9300
+    volumeMounts:
+      - name: elasticsearch-data-pvc
+        mountPath: /usr/share/elasticsearch/data
+      - name: elasticsearch-plugins-pvc
+        mountPath: /usr/share/elasticsearch/plugins
+    volumeClaimTemplates:
+      - name: elasticsearch-data-pvc
+        size: 5Gi
+        label: elasticsearch-data
+      - name: elasticsearch-plugins-pvc
+        size: 1Gi
+        label: elasticsearch-plugins
+  - name: mysql
+    image: mysql:8.1
+    env:
+      - name: MYSQL_ROOT_PASSWORD
+        value: mall@666666
+    ports:
+      - 3306
+    volumeMounts:
+      - name: mysql-data-pvc
+        mountPath: /var/lib/mysql
+      - name: mysql-log-pvc
+        mountPath: /var/log/mysql
+      - name: config-volume
+        mountPath: /etc/mysql/conf.d
+    volumes:
+      - name: config-volume
+        type: configMap
+        typeNameKey: name
+        typeNameValue: mysql-cm
+    volumeClaimTemplates:
+      - name: mysql-data-pvc
+        size: 10Gi
+        label: mysql-data
+      - name: mysql-log-pvc
+        size: 10Gi
+        label: mysql-log
+  - name: redis
+    image: redis:7.2.1
+    command:
+      - "redis-server"
+      - "/usr/local/etc/redis/redis.conf"
+    ports:
+      - 6379
+    volumeMounts:
+      - name: redis-data-pvc
+        mountPath: /data
+      - name: config-volume
+        mountPath: /usr/local/etc/redis
+    volumes:
+      - name: config-volume
+        type: configMap
+        typeNameKey: name
+        typeNameValue: redis-cm
+    volumeClaimTemplates:
+      - name: redis-data-pvc
+        size: 10Gi
+        label: redis-data
